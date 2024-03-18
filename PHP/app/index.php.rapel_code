@@ -1,0 +1,83 @@
+<?php
+
+// $user = ['Pierre', 'Bertrand', 26];
+
+// echo $user[1];
+
+// foreach ($user as $item) {
+//     echo $item . '<br/>';
+// }
+
+// $user = [
+//       'prenom' => 'Pierre',
+//      'nom' => 'Bertrand',
+//      'age' => '26',
+//  ];
+
+// echo $user['nom'];
+
+// foreach ($user as $key => $value) {
+//     echo "$key : $value<br/>";
+// }
+
+// $users = [
+//    [
+//      'prenom' => 'Pierre',
+//     'nom' => 'Bertrand',
+//     'age' => '26',
+//     'role' => ['ROLE_USER']
+//    ],
+
+//    [
+//      'prenom' => 'Damien',
+//     'nom' => 'Vimard',
+//     'age' => '43',
+//     'role' => ['ROLE_ADMIN', 'ROLE_USER']
+//    ],
+
+// ];
+
+
+// foreach ($users as $user) {
+//     if (in_array('ROLE_ADMIN', $user['role'])) {
+//         echo "$user[prenom] $user[nom]";
+//     }
+// }
+
+// function sayHello(): void
+// {
+//     echo 'Hello';
+// }
+// sayHello();
+
+// function addition(float $val1, float $val2): float
+// {
+//     return $val1 + $val2;
+// }
+// echo addition(val1:10,val2:30);
+
+
+$users = [
+    [
+        'prenom' => 'Pierre',
+        'nom' => 'Bertrand',
+        'age' => '26',
+        'role' => ['ROLE_USER']
+    ],
+
+    [
+        'prenom' => 'Damien',
+        'nom' => 'Vimard',
+        'age' => '43',
+        'role' => ['ROLE_ADMIN', 'ROLE_USER']
+    ],
+
+];
+?>
+<?php foreach ($users as $user): ?>
+    <div class="card">
+        <h1>
+            <?= "$user[prenom] $user[nom]"; ?>
+        </h1>
+    </div>
+<?php endforeach; ?>
