@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+    --primary: #1c68c4;
+    --secondary: #aa1aaf;
+    --border-radus: 7px;
+    --text-color: #333;
+    --white: #efefef;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: var(--text-color);
+    background: var(--white);
+    font-family: lato, sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    color: var(--primary);
+    font-style: 700;
+    line-height: 120%;
+}
+
+p:not(:last-of-type) {
+    margin-bottom: 1em;
+}
+
+a {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+}
+
+ul,
+ol {
+    list-style: none;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+.mt-2 {
+    margin-top: 1em;
+}
+
+.mb-2 {
+    margin-bottom: 1em;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+.btn {
+    padding: .6em 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radus);
+    transition: all 0.4s ease;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: #0e4b8f;
+}
+
+.btn-secondary:hover {
+    background: #7a0e7f;
+}
+
+/************************* NAVBAR *************************/
+
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 999999;
+    background: var(--primary);
+    color: var(--white);
+}
+
+.navbar-content {
+    padding: 0.6em 1em;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.logo {
+    font-size: 1.6em;
+    font-weight: 700;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    color: #dfdfdf;   
+}
+
+.navbar-btn {
+    margin-left: auto;
+}
+
+
+/*********** FORM ********/
+
+form.card {
+    border-radius: var(--border-radus);
+    border: 1px solid var(--secondary);
+    width: max-content;
+    margin: auto;
+    padding: 1em 5em;
+}
+
+.group-input {
+    margin-bottom: 1em;
+}
+
+label {
+    display: block;
+    margin-bottom: .2em;
+}
+
+input, textarea {
+    padding: .5em;
+    border-radius: var(--border-radus);
+    border: 1px solid var(--secondary);
+}
+
+input:focus, textarea:focus {
+    border: 1px solid var(--primary);
+}
+
