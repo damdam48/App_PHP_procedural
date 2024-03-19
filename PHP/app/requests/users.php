@@ -36,3 +36,32 @@ function findOneUserByEmail(string $email): array|bool
     return $sqlStatement->fetch();
 }
 
+/**
+ * function to crate User in database
+ *
+ * @param string $firstName
+ * @param string $lastName
+ * @param string $email
+ * @param string $password
+ * @return boolean
+ */
+function createUser(string $firstName, string $lastName, string $email, string $password): bool
+{
+    global $db;
+    try {
+        $query = "INSERT INTO users(firstName, lastName, email, password) VALUE (:firstName, :lastName, :email, :password)";
+
+        $sqlStatement = $db->prepare($query);
+        $sqlStatement->execute([
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'email' => $email,
+            'password' => $password,
+        ]);
+    } catch (PDOException $error) {
+        die($error->getMessage());
+        return false;
+    }
+
+    return true;
+}

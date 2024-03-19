@@ -30,6 +30,22 @@ h6{
     line-height: 120%;
 }
 
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.9em;
+}
+
+h3 {
+    font-size: 1.7em;
+}
+
+p {
+    font-size: 1.4em;
+}
+
 p:not(:last-of-type) {
     margin-bottom: 1em;
 }
@@ -68,7 +84,6 @@ img {
     text-align: center;
 }
 
-
 .btn {
     padding: .6em 1em;
     cursor: pointer;
@@ -93,6 +108,44 @@ img {
 
 .btn-secondary:hover {
     background: #7a0e7f;
+}
+
+.btn-danger {
+    background: rgba(214, 52, 52, 0.811);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background: #0e4b8f;
+
+}
+.btn-outline-light {
+    border: 1px solid var(--white);
+}
+
+.btn-outline-light:hover {
+    background: var(--white);
+    color: var(--text-color);
+}
+
+
+.alert {
+    border-radius: var(--border-radus);
+    padding: 1em;
+    margin-bottom: 0.5em;
+    width: 100%;
+    text-align: center;
+}
+
+.alert-danger {
+    background: rgba(214, 52, 52, 0.811);
+    border: 1px solid rgba(185, 50, 50, 0.725);
+    color: var(--white);
+}
+.alert-success {
+    background: #40b024;
+    border: 1px solid #18b52d;
+    color: var(--white);
 }
 
 /************************* NAVBAR *************************/
