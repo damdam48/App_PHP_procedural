@@ -9,9 +9,20 @@
                 <a href="#"> Articles</a>
             </li>
         </ul>
-        
+
         <ul class="navbar-links navbar-btn">
-            <?php if(!empty($_SESSION['user'])) : ?>
+            <?php if (!empty($_SESSION['user'])) : ?>
+                <?php if (in_array('ROLE_ADMIN', $_SESSION['user']['roles'])) : ?>
+                    <li class="navbar-item">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary">Admin</button>
+                            <div class="dropdown-content">
+                                <a href="/admin/users">Users</a>
+                                <a href="/admin/articles/create.php">Articles</a>
+                            </div>
+                        </div>
+                    </li>
+                <?php endif; ?>
                 <li class="navbar-item">
                     <a href="/logout.php" class="btn btn-danger">Déconnecxion</a>
                 </li>
@@ -19,10 +30,10 @@
                 <li class="navbar-item">
                     <a href="/register.php" class="btn btn-outline-light">Inscription</a>
                 </li>
-            <li class="navbar-item">
-                <a href="/login.php" class="btn btn-secondary">Connexion</a>
-            </li>
-            <?php endif ;?>
+                <li class="navbar-item">
+                    <a href="/login.php" class="btn btn-secondary">Connexion</a>
+                </li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>

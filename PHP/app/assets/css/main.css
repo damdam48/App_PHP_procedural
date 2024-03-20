@@ -90,6 +90,8 @@ img {
     border: none;
     border-radius: var(--border-radus);
     transition: all 0.4s ease;
+    font-size: inherit;
+    font-family: inherit;
 }
 
 .btn-primary {
@@ -111,7 +113,7 @@ img {
 }
 
 .btn-danger {
-    background: rgba(214, 52, 52, 0.811);
+    background: rgba(207, 26, 26, 0.877);
     color: var(--white);
 }
 
@@ -138,7 +140,7 @@ img {
 }
 
 .alert-danger {
-    background: rgba(214, 52, 52, 0.811);
+    background: rgba(212, 29, 29, 0.811);
     border: 1px solid rgba(185, 50, 50, 0.725);
     color: var(--white);
 }
@@ -181,6 +183,30 @@ img {
 .navbar-btn {
     margin-left: auto;
 }
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--white);
+    padding: 1em;
+    color: var(--text-color);
+    border-radius: var(--border-radus);
+    border: 1px solid var(--text-color);
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+
+}
+
 
 
 /*********** FORM ********/
