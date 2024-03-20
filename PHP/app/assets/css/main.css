@@ -212,3 +212,32 @@ input:focus, textarea:focus {
     border: 1px solid var(--primary);
 }
 
+
+/************************* CARD *********************/
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 1em 0;
+}
+
+.card {
+    width: 20%;
+    border: 1px solid #363434cd;
+    border-radius: var(--border-radus);
+    box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.4);
+}
+
+.card-body {
+    padding: 1em;
+}
+
+.card-btn {
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}

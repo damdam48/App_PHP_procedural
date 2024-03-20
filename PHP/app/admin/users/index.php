@@ -2,12 +2,13 @@
 
 session_start();
 
-require_once '/app/utils/isAdminphp';
+require_once '/app/utils/isAdmin.php';
 
 require_once '/app/requests/users.php';
 
 // var_dump($_SESSION);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +27,25 @@ require_once '/app/requests/users.php';
 
         <section class="container mt-2">
             <h1 class="text-center">Adminnistration des users</h1>
+            <div class="card-list mt-2">
+                <?php foreach (findAllUser() as $user) : ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title"><?= "$user[firstName] $user[lastName]"; ?></h2>
+                            <p><?= $user['email']; ?></p>
+                            <p>
+                                <?php foreach (json_decode($user['roles'] ?: '["ROLE_USER"]') as $role) : ?>
+                                    <?= "$role, "; ?>
+                                <?php endforeach; ?>
+                            </p>
+
+                            <div class="card-btn">
+                                <a href="#" class="btn btn-secondary">Modifier</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </section>
 
 

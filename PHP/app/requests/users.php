@@ -17,6 +17,23 @@ function findAllUser(): array
     return $sqlStatement->fetchAll();
 }
 
+/**
+ * Find one user filter by id
+ *
+ * @param integer $id
+ * @return array|boolean
+ */
+function findOneUserById(int $id): array|bool
+{
+    global $db;
+
+    $sqlStatement = $db->prepare("SELECT * FROM users WHERE id = :id");
+    $sqlStatement->execute([
+        'id' => $id,
+    ]);
+
+    return $sqlStatement->fetch();
+}
 
 /**
  * find one user filter by email
