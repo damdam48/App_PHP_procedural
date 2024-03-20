@@ -7,6 +7,10 @@ require_once '/app/utils/isAdmin.php';
 require_once '/app/requests/users.php';
 
 // var_dump($_SESSION);
+
+$_SESSION['token'] = bin2hex(random_bytes(80));
+
+
 ?>
 
 
@@ -40,7 +44,12 @@ require_once '/app/requests/users.php';
                             </p>
 
                             <div class="card-btn">
-                                <a href="#" class="btn btn-secondary">Modifier</a>
+                                <a href="/admin/users/edit.php?id=<?= $user['id'] ;?>" class="btn btn-secondary">Modifier</a>
+                                <form action="/admin/users/delete.php" method="POST" onsubmit="return confirm('étes-vous sur de vouloir supprimer cet utilisateur ?')">
+                                    <input type="hidden" name="id" value="<?= $user['id']; ?>">
+                                    <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                </form>
                             </div>
                         </div>
                     </div>

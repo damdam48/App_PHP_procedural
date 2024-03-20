@@ -17,6 +17,8 @@ function findAllUser(): array
     return $sqlStatement->fetchAll();
 }
 
+
+
 /**
  * Find one user filter by id
  *
@@ -35,6 +37,8 @@ function findOneUserById(int $id): array|bool
     return $sqlStatement->fetch();
 }
 
+
+
 /**
  * find one user filter by email
  *
@@ -52,6 +56,9 @@ function findOneUserByEmail(string $email): array|bool
 
     return $sqlStatement->fetch();
 }
+
+
+
 
 /**
  * function to crate User in database
@@ -77,6 +84,66 @@ function createUser(string $firstName, string $lastName, string $email, string $
         ]);
     } catch (PDOException $error) {
         die($error->getMessage());
+        return false;
+    }
+
+    return true;
+}
+
+
+
+
+/**
+ * Update a user in DB
+ *
+ * @param integer $id
+ * @param string $firstName
+ * @param string $lastName
+ * @param string $email
+ * @param array|null $roles
+ * @return boolean
+ */
+function updateUser(int $id, string $firstName, string $lastName, string $email, ?array $roles = null): bool
+{
+    global $db;
+
+    try {
+        $query = "UPDATE users SET firstName = :firstName, lastName = :lastName, email = :email, roles = :roles WHERE id =:id";
+
+        $sqlStatement = $db->prepare($query);
+        $sqlStatement->execute([
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'email' => $email,
+            'roles' => json_encode($roles ?: ['ROLE_USER']),
+            'id' => $id,
+        ]);
+    } catch (PDOException $error) {
+        return false;
+    }
+
+    return true;
+}
+
+
+
+/**
+ * DELETE a user from DB
+ *
+ * @param integer $id
+ * @return boolean
+ */
+function deleteUser(int $id): bool
+{
+    global $db;
+
+    try {
+        $query = "DELETE FROM users WHERE id = :id";
+        $sqlStatement = $db->prepare($query);
+        $sqlStatement->execute([
+            'id' => $id,
+        ]);
+    } catch (PDOException $error) {
         return false;
     }
 
