@@ -5,16 +5,23 @@ session_start();
 require_once '/app/utils/isAdmin.php';
 require_once '/app/requests/articles.php';
 
-$article = findOneArticleById(isset($_GET['id']) ? $_GET['id'] : 0);
-
-var_dump($_POST);
 
 if (!empty($_POST['title']) && !empty($_POST['description'])) {
     $title = trim(strip_tags($_POST['title']));
     $description = trim(strip_tags($_POST['description']));
 
     $ennable = isset($_POST['enable']) ? 1 : 0;
-    
+    $userId = $_SESSION['user']['id'];
+
+    if (createArticle($title, $description, $ennable, $userId)) {
+        $_SESSION['messages']['success'] = "Article crée avec succèes";
+
+        http_response_code(302);
+        header('Location: /admin/articles');
+        exit();
+    } else {
+        $errorMessage = "Une erreur est survenue";
+    }
 } elseif ($_SERVER['REQUEST_METHOD'] === "POST") {
     $errorMessage = "Veuillez renseigner les champs obligatoires";
 }

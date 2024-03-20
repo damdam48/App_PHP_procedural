@@ -1,13 +1,12 @@
 <?php
 
 require_once '/app/config/mysql.php';
-
 /**
- * find all ARTICLES in database
- * 
+ * Find all article from db
+ *
  * @return array
  */
-function findAllArticle(): array
+function findAllArticles(): array
 {
     global $db;
 
@@ -19,20 +18,33 @@ function findAllArticle(): array
 
 
 
+
 /**
- * Find one ARTICLES filter by id
+ * Create
  *
- * @param integer $id
- * @return array|boolean
+ * @param string $title
+ * @param string $description
+ * @param integer $enable
+ * @param int $userId
+ * @return boolean
  */
-function findOneArticleById(int $id): array|bool
+function createArticle(string $title, string $description, int $enable, int $userId): bool
 {
     global $db;
 
-    $sqlStatement = $db->prepare("SELECT * FROM articles WHERE id = :id");
-    $sqlStatement->execute([
-        'id' => $id,
-    ]);
+    try {
+        $query = "INSERT INTO articles(title, description, enable, userId) VALUES (:title, :description, :enable, :userId)";
+        $sqlStatement = $db->prepare($query);
+        $sqlStatement->execute([
+            'title' => $title,
+            'description' => $description,
+            'enable' => $enable,
+            'userId' => $userId,
+        ]);
+    } catch (PDOException $error) {
+        die($error->getMessage());
+        return false;
+    }
 
-    return $sqlStatement->fetch();
+    return true;
 }
