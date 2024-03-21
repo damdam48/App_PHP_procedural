@@ -24,28 +24,33 @@ $_SESSION['token'] = bin2hex(random_bytes(80));
     <?php require_once '/app/layout/header.php'; ?>
     <main>
         <?php require_once '/app/layout/flash.php'; ?>
-        
+
         <section class="container mt-2">
             <h1 class="text-center">Administration des articles</h1>
             <a href="/admin/articles/create.php" class="btn btn-primary mb-2">Créer un article</a>
         </section>
 
         <div class="card-list mt-2">
-            <?php foreach(findAllArticles() as $article): ?>
+            <?php foreach (findAllArticles() as $article) : ?>
                 <div class="card border-<?= $article['enable'] === 1 ? 'success' : 'danger'; ?>">
+
+                    <?php if ($article['imageName']) : ?>
+                        <img src="/assets/uploads/article/<?= $article['imageName']; ?>" alt="<?= $article['title']; ?>" class="card-img">
+                    <?php endif; ?>
+
                     <div class="card-body">
                         <h2 class="card-title"><?= $article['title']; ?></h2>
                         <p><?= $article['description']; ?></p>
                         <p><?= (new DateTime($article['createdAt']))->format('d/m/Y'); ?></p>
-                        <p><?= $article['enable'] === 1 ? 'Actif': 'Inactif' ;?></p>
+                        <p><?= $article['enable'] === 1 ? 'Actif' : 'Inactif'; ?></p>
                         <em><?= "$article[firstName] $article[lastName]"; ?></em>
-                        <div class="btn">
+                        <div class="card-btn">
                             <a href="/admin/articles/edit.php?id=<?= $article['id']; ?>" class="btn btn-secondary">Modifier</a>
                             <form action="/admin/articles/delete.php" method="POST" onsubmit="return confirm('étes-vous sur de vouloir supprimer cet article ?')">
-                                    <input type="hidden" name="id" value="<?= $article['id']; ?>">
-                                    <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
-                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                </form>
+                                <input type="hidden" name="id" value="<?= $article['id']; ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
                         </div>
                     </div>
                 </div>

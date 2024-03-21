@@ -19,6 +19,7 @@ body {
     background: var(--white);
     font-family: lato, sans-serif;
 }
+
 h1,
 h2,
 h3,
@@ -208,11 +209,11 @@ img {
 }
 
 .border-success {
-    border: 1px solid #18b52d !important;
+    border: 2px solid #18b52d !important;
 }
 
 .border-danger {
-    border: 1px solid rgba(213, 36, 36, 0.893) !important;
+    border: 2px solid rgba(213, 36, 36, 0.893) !important;
 }
 
 
@@ -239,11 +240,28 @@ input, textarea {
     padding: .5em;
     border-radius: var(--border-radus);
     border: 1px solid var(--secondary);
+    width: 100%;
 }
 
 input:focus, textarea:focus {
     border: 1px solid var(--primary);
 }
+
+form img {
+    max-width: 250px;
+    display: block;
+    margin: 1em auto 0;
+    border-radius: var(--border-radus);
+}
+
+.group-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+/* .group-check label,
+.group-check input */
 
 
 /************************* CARD *********************/
@@ -266,10 +284,18 @@ input:focus, textarea:focus {
 }
 
 .card {
-    width: 20%;
+    margin-left: 1em;
+    margin-right: 1em;
+    width: 18%;
     border: 1px solid #363434cd;
     border-radius: var(--border-radus);
     box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+.card-img {
+    width: 100%;
+    aspect-ratio: 16/9;
 }
 
 .card-body {

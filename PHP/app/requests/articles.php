@@ -10,7 +10,7 @@ function findAllArticles(): array
 {
     global $db;
 
-    $sqlStatement = $db->prepare("SELECT a.id, a.title, a.description, a.createdAt, a.enable, u.firstName, u.lastName FROM articles a JOIN users u ON u.id = a.userId ORDER BY a.createdAt DESC");
+    $sqlStatement = $db->prepare("SELECT a.id, a.title, a.description, a.createdAt, a.enable, a.imageName, u.firstName, u.lastName FROM articles a JOIN users u ON u.id = a.userId ORDER BY a.createdAt DESC");
     $sqlStatement->execute();
 
     return $sqlStatement->fetchAll();
@@ -95,23 +95,43 @@ function createArticle(string $title, string $description, int $enable, int $use
  * @param string $description
  * @param integer $enable
  * @param string $updatedAt
+ * @param ?string $imageName =null
  * @return boolean
  */
-function updateArticle(int $id, string $title, string $description, int $enable, string $updatedAt): bool
+function updateArticle(int $id, string $title, string $description, int $enable, string $updatedAt, ?string $imageName =null): bool
 {
     global $db;
 
     try {
-        $query = "UPDATE articles SET title = :title, description = :description, enable = :enable, updatedAt = :updatedAt WHERE id = :id";
-
-        $sqlStatement = $db->prepare($query);
-        $sqlStatement->execute([
+        $query = "UPDATE articles SET title = :title, description = :description, enable = :enable, updatedAt = :updatedAt";
+        $params = [
+            'id' => $id,
             'title' => $title,
             'description' => $description,
             'enable' => $enable,
-            'id' => $id,
             'updatedAt' => $updatedAt,
-        ]);
+        ];
+
+        if ($imageName) {
+            $query .= ", imageName = :imageName";
+            $params['imageName'] = $imageName;
+        }
+
+        $query .= " WHERE id = :id";
+
+        $sqlStatement = $db->prepare($query);
+        $sqlStatement->execute($params);
+
+        // $query = "UPDATE articles SET title = :title, description = :description, enable = :enable, updatedAt = :updatedAt WHERE id = :id";
+
+        // $sqlStatement = $db->prepare($query);
+        // $sqlStatement->execute([
+        //     'title' => $title,
+        //     'description' => $description,
+        //     'enable' => $enable,
+        //     'id' => $id,
+        //     'updatedAt' => $updatedAt,
+        // ]);
     } catch (Exception $error) {
         // Log or handle the error appropriately
         error_log('Error updating article: ' . $error->getMessage());

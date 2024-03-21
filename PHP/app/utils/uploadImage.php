@@ -6,7 +6,7 @@
  * @param string $folder
  * @return string|null
  */
-function uploadImage(array $image, string $folder): ?string
+function uploadImage(array $image, string $folder, ?string $oldImage = null): ?string
 {
     if ($image['error'] === 0 && $image['size'] < 16000000) {
         $fileInfo = pathinfo($image['name']);
@@ -21,6 +21,10 @@ function uploadImage(array $image, string $folder): ?string
             }
 
             move_uploaded_file($image['tmp_name'], "/app/assets/uploads/$folder/$imageName");
+
+            if ($oldImage && file_exists("/app/assets/uploads/$folder/$oldImage")) {
+                unlink("/app/assets/uploads/$folder/$oldImage");
+            }
 
             return $imageName;
         }

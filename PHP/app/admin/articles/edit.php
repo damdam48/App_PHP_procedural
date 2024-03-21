@@ -6,6 +6,8 @@ session_start();
 // Inclusion des fichiers nécessaires
 require_once '/app/utils/isAdmin.php'; // Vérifie si l'utilisateur actuel est un administrateur.
 require_once '/app/requests/articles.php'; // Contient des fonctions pour effectuer des opérations sur les articles.
+require_once '/app/utils/uploadImage.php';
+
 
 // Récupère les détails de l'article en fonction de l'identifiant passé en GET, s'il existe.
 $article = findOneArticleById(isset($_GET['id']) ? $_GET['id'] : 0);
@@ -39,12 +41,16 @@ if (
 
         $updatedAt = (new DateTime())->format('Y-m-d H:i:s');
 
+        if (!empty($_FILES['image'])) {
+            $imageName = uploadImage($_FILES['image'], 'articles', $article['imageName'] ?: null);
+        }
+
         // Vérifie si le nouveau titre est déjà utilisé par un autre article
         if ($oldTitle !== $title && findOneArticleBytitle($title)) {
             $errorMessage = "Le nom de cet article est déjà utilisé";
         } else {
             // Met à jour l'article avec les nouvelles données
-            if (updateArticle($article['id'], $title, $description, $enable, $updatedAt)) {
+            if (updateArticle($article['id'], $title, $description, $enable, $updatedAt, isset($imageName) ? $imageName : null)) {
                 // Si la mise à jour réussit, stocke un message de succès dans la session.
                 $_SESSION['messages']['success'] = "Article modifié avec succès";
 
@@ -86,7 +92,7 @@ if (
     <main>
         <section class="container">
             <h1 class="text-center mt-2">Modifier un Article</h1>
-            <form action="<?= $_SERVER['REQUEST_URI']; ?>" method="POST" class="card">
+            <form action="<?= $_SERVER['REQUEST_URI']; ?>" method="POST" class="card" enctype="multipart/form-data">
 
                 <?php if (isset($errorMessage)) : ?>
                     <div class="alert alert-danger">
@@ -109,6 +115,14 @@ if (
                     <label for="enable">Actif</label>
                 </div>
 
+                <div class="group-input">
+                    <label for="image">Image</label>
+                    <input type="file" name="image" id="image" accept="image/*">
+
+                    <?php if ($article['imageName']) : ?>
+                        <img src="/assets/uploads/article/<?= $article['imageName']; ?>" alt="<?= $article['title']; ?>" class="card-img mt-2" loading="lazy">
+                    <?php endif; ?>
+                </div>
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Modifier</button>
