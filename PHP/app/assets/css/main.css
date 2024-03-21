@@ -207,8 +207,6 @@ img {
 
 }
 
-
-
 .border-success {
     border: 1px solid #18b52d !important;
 }
@@ -218,8 +216,7 @@ img {
 }
 
 
-
-/*********** FORM ********/
+/**************************** FORM **********************/
 
 form.card {
     border-radius: var(--border-radus);
@@ -259,9 +256,11 @@ input:focus, textarea:focus {
     gap: 1em 0;
 
 }
+
 .card-tiltle {
     margin-bottom: .5em;
 }
+
 .card p:not(:last-of-type) {
     margin-bottom: 0.3em;
 }

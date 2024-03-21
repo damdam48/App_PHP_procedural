@@ -17,7 +17,6 @@ function findAllArticles(): array
 }
 
 
-
 /**
  * Find one article filter by id
  *
@@ -35,8 +34,6 @@ function findOneArticleById(int $id): array|bool
 
     return $sqlStatement->fetch();
 }
-
-
 
 
 /**
@@ -58,28 +55,29 @@ function findOneArticleBytitle(string $title): array|bool
 }
 
 
-
 /**
- * Create
+ * Create article en db
  *
  * @param string $title
  * @param string $description
  * @param integer $enable
  * @param int $userId
+ * @param ?string $imageName = null
  * @return boolean
  */
-function createArticle(string $title, string $description, int $enable, int $userId): bool
+function createArticle(string $title, string $description, int $enable, int $userId, ?string $imageName = null): bool
 {
     global $db;
 
     try {
-        $query = "INSERT INTO articles(title, description, enable, userId) VALUES (:title, :description, :enable, :userId)";
+        $query = "INSERT INTO articles(title, description, enable, userId, imageName) VALUES (:title, :description, :enable, :userId, :imageName)";
         $sqlStatement = $db->prepare($query);
         $sqlStatement->execute([
             'title' => $title,
             'description' => $description,
             'enable' => $enable,
             'userId' => $userId,
+            'imageName' => $imageName,
         ]);
     } catch (PDOException $error) {
         // die($error->getMessage());
@@ -89,7 +87,16 @@ function createArticle(string $title, string $description, int $enable, int $use
     return true;
 }
 
-
+/**
+ * mise a jour d'un article en db
+ *
+ * @param integer $id
+ * @param string $title
+ * @param string $description
+ * @param integer $enable
+ * @param string $updatedAt
+ * @return boolean
+ */
 function updateArticle(int $id, string $title, string $description, int $enable, string $updatedAt): bool
 {
     global $db;
@@ -114,6 +121,7 @@ function updateArticle(int $id, string $title, string $description, int $enable,
     return true;
 }
 
+
 /**
  * DELETE a article from DB
  *
@@ -136,3 +144,5 @@ function deleteArticle(int $id): bool
 
     return true;
 }
+
+

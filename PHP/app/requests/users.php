@@ -18,7 +18,6 @@ function findAllUser(): array
 }
 
 
-
 /**
  * Find one user filter by id
  *
@@ -38,7 +37,6 @@ function findOneUserById(int $id): array|bool
 }
 
 
-
 /**
  * find one user filter by email
  *
@@ -56,8 +54,6 @@ function findOneUserByEmail(string $email): array|bool
 
     return $sqlStatement->fetch();
 }
-
-
 
 
 /**
@@ -91,8 +87,6 @@ function createUser(string $firstName, string $lastName, string $email, string $
 }
 
 
-
-
 /**
  * Update a user in DB
  *
@@ -124,7 +118,6 @@ function updateUser(int $id, string $firstName, string $lastName, string $email,
 
     return true;
 }
-
 
 
 /**

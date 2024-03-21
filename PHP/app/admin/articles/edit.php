@@ -1,61 +1,73 @@
 <?php
 
+// Démarre une session PHP pour stocker des variables de session entre les différentes requêtes HTTP.
 session_start();
 
-require_once '/app/utils/isAdmin.php';
-require_once '/app/requests/articles.php';
+// Inclusion des fichiers nécessaires
+require_once '/app/utils/isAdmin.php'; // Vérifie si l'utilisateur actuel est un administrateur.
+require_once '/app/requests/articles.php'; // Contient des fonctions pour effectuer des opérations sur les articles.
 
+// Récupère les détails de l'article en fonction de l'identifiant passé en GET, s'il existe.
 $article = findOneArticleById(isset($_GET['id']) ? $_GET['id'] : 0);
 
+// Vérifie si l'article a été trouvé. Si ce n'est pas le cas :
 if (!$article) {
-    $_SESSION['messages']['danger'] = "article non trouvé";
+    // Stocke un message d'erreur dans la session.
+    $_SESSION['messages']['danger'] = "Article non trouvé";
 
+    // Redirige vers la page d'administration des articles.
     http_response_code(302);
     header('Location: /admin/articles');
+
+    // Termine l'exécution du script.
     exit();
 }
 
-// verification de la soumission
+// Vérifie si des données ont été soumises via POST
 if (
     !empty($_POST['title']) &&
     !empty($_POST['description'])
-
 ) {
-    // nettayer les données
+    // Nettoie les données soumises
     $title = trim(strip_tags($_POST['title']));
     $description = trim(strip_tags($_POST['description']));
 
-
-    // ajouter de la logique et contraintes
+    // Vérifie si le titre est valide
     if ($title) {
         $oldTitle = $article['title'];
         $enable = isset($_POST['enable']) ? 1 : 0;
 
         $updatedAt = (new DateTime())->format('Y-m-d H:i:s');
 
+        // Vérifie si le nouveau titre est déjà utilisé par un autre article
         if ($oldTitle !== $title && findOneArticleBytitle($title)) {
-            $errorMessage = "le nom de c'est article est deja utiliser";
-
+            $errorMessage = "Le nom de cet article est déjà utilisé";
         } else {
-
+            // Met à jour l'article avec les nouvelles données
             if (updateArticle($article['id'], $title, $description, $enable, $updatedAt)) {
-                $_SESSION['messages']['success'] = "article modifié avec succès";
+                // Si la mise à jour réussit, stocke un message de succès dans la session.
+                $_SESSION['messages']['success'] = "Article modifié avec succès";
 
+                // Redirige vers la page d'administration des articles.
                 http_response_code(302);
                 header('Location: /admin/articles');
                 exit();
             } else {
+                // Si une erreur survient lors de la mise à jour, stocke un message d'erreur.
                 $errorMessage = "Une erreur est survenue";
             }
         }
     } else {
-        $errorMessage = "Renseingnez un article valide";
+        // Si le titre n'est pas valide, stocke un message d'erreur.
+        $errorMessage = "Renseignez un titre valide";
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Si la requête est de type POST mais les champs obligatoires ne sont pas renseignés, stocke un message d'erreur.
     $errorMessage = "Veuillez renseigner les champs obligatoires";
 }
 
 ?>
+
 
 
 <!DOCTYPE html>

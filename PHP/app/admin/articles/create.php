@@ -4,16 +4,26 @@ session_start();
 
 require_once '/app/utils/isAdmin.php';
 require_once '/app/requests/articles.php';
+require_once '/app/utils/uploadImage.php';
 
-
+// Vérifie si les champs 'title' et 'description' sont présents et non vides dans la requête POST.
 if (!empty($_POST['title']) && !empty($_POST['description'])) {
+
+    // Nettoie et récupère les valeurs des champs 'title' et 'description'
     $title = trim(strip_tags($_POST['title']));
     $description = trim(strip_tags($_POST['description']));
 
+    // Vérifie si la case à cocher 'enable' est cochée.
     $ennable = isset($_POST['enable']) ? 1 : 0;
+
+    // Récupère l'ID de l'utilisateur à partir de la session.
     $userId = $_SESSION['user']['id'];
 
-    if (createArticle($title, $description, $ennable, $userId)) {
+    $imageName = uploadImage($_FILES['image'], 'article');
+
+
+    // Crée un nouvel article en utilisant la fonction createArticle().
+    if (createArticle($title, $description, $ennable, $userId, $imageName)) {
         $_SESSION['messages']['success'] = "Article crée avec succèes";
 
         http_response_code(302);
@@ -22,6 +32,8 @@ if (!empty($_POST['title']) && !empty($_POST['description'])) {
     } else {
         $errorMessage = "Une erreur est survenue";
     }
+
+    // Si la requête est de type POST mais les champs obligatoires ne sont pas renseignés, envoi un message d'erreur.
 } elseif ($_SERVER['REQUEST_METHOD'] === "POST") {
     $errorMessage = "Veuillez renseigner les champs obligatoires";
 }
@@ -48,7 +60,7 @@ if (!empty($_POST['title']) && !empty($_POST['description'])) {
         <section class="container mt-2">
             <h1 class="text-center mt-2">Creation d'un articles</h1>
 
-            <form action="<?= $_SERVER['REQUEST_URI'] ?>" method="POST" class="card">
+            <form action="<?= $_SERVER['REQUEST_URI'] ?>" method="POST" class="card" enctype="multipart/form-data">
 
                 <?php if (isset($errorMessage)) : ?>
                     <div class="alert alert-danger">
@@ -68,6 +80,12 @@ if (!empty($_POST['title']) && !empty($_POST['description'])) {
                     <label for="enable">Actif</label>
                     <input type="checkbox" name="enable" id="enable">
                 </div>
+
+                <div class="group-input">
+                    <label for="image">Image</label>
+                    <input type="file" name="image" id="image" accept="image/*">
+                </div>
+
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Créer</button>
                 </div>

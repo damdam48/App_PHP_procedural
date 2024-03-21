@@ -6,6 +6,7 @@ require_once '/app/utils/isAdmin.php';
 
 require_once '/app/requests/articles.php';
 
+$_SESSION['token'] = bin2hex(random_bytes(80));
 
 ?>
 
