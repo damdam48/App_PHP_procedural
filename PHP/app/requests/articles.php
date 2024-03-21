@@ -114,3 +114,25 @@ function updateArticle(int $id, string $title, string $description, int $enable,
     return true;
 }
 
+/**
+ * DELETE a article from DB
+ *
+ * @param integer $id
+ * @return boolean
+ */
+function deleteArticle(int $id): bool
+{
+    global $db;
+
+    try {
+        $query = "DELETE FROM articles WHERE id = :id";
+        $sqlStatement = $db->prepare($query);
+        $sqlStatement->execute([
+            'id' => $id,
+        ]);
+    } catch (PDOException $error) {
+        return false;
+    }
+
+    return true;
+}

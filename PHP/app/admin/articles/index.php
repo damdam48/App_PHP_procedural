@@ -40,6 +40,11 @@ require_once '/app/requests/articles.php';
                         <em><?= "$article[firstName] $article[lastName]"; ?></em>
                         <div class="btn">
                             <a href="/admin/articles/edit.php?id=<?= $article['id']; ?>" class="btn btn-secondary">Modifier</a>
+                            <form action="/admin/articles/delete.php" method="POST" onsubmit="return confirm('étes-vous sur de vouloir supprimer cet article ?')">
+                                    <input type="hidden" name="id" value="<?= $article['id']; ?>">
+                                    <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                </form>
                         </div>
                     </div>
                 </div>
