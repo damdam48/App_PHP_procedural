@@ -18,7 +18,7 @@
                             <button class="btn btn-secondary">Admin</button>
                             <div class="dropdown-content">
                                 <a href="/admin/users">Users</a>
-                                <a href="/admin/articles/create.php">Articles</a>
+                                <a href="/admin/articles">Articles</a>
                             </div>
                         </div>
                     </li>

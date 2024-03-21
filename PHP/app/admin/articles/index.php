@@ -26,15 +26,21 @@ require_once '/app/requests/articles.php';
         
         <section class="container mt-2">
             <h1 class="text-center">Administration des articles</h1>
+            <a href="/admin/articles/create.php" class="btn btn-primary mb-2">Créer un article</a>
         </section>
 
         <div class="card-list mt-2">
             <?php foreach(findAllArticles() as $article): ?>
-                <div class="card">
+                <div class="card border-<?= $article['enable'] === 1 ? 'success' : 'danger'; ?>">
                     <div class="card-body">
                         <h2 class="card-title"><?= $article['title']; ?></h2>
                         <p><?= $article['description']; ?></p>
                         <p><?= (new DateTime($article['createdAt']))->format('d/m/Y'); ?></p>
+                        <p><?= $article['enable'] === 1 ? 'Actif': 'Inactif' ;?></p>
+                        <em><?= "$article[firstName] $article[lastName]"; ?></em>
+                        <div class="btn">
+                            <a href="/admin/articles/edit.php?id=<?= $article['id']; ?>" class="btn btn-secondary">Modifier</a>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>

@@ -209,6 +209,16 @@ img {
 
 
 
+.border-success {
+    border: 1px solid #18b52d !important;
+}
+
+.border-danger {
+    border: 1px solid rgba(213, 36, 36, 0.893) !important;
+}
+
+
+
 /*********** FORM ********/
 
 form.card {
@@ -247,6 +257,13 @@ input:focus, textarea:focus {
     justify-content: space-between;
     align-items: stretch;
     gap: 1em 0;
+
+}
+.card-tiltle {
+    margin-bottom: .5em;
+}
+.card p:not(:last-of-type) {
+    margin-bottom: 0.3em;
 }
 
 .card {
@@ -267,3 +284,8 @@ input:focus, textarea:focus {
     justify-content: space-between;
     align-items: center;
 }
+
+.card p:last-of-type {
+    margin-bottom: 1em;
+}
+
