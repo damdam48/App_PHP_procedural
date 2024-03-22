@@ -33,11 +33,11 @@ if (
     !empty($_POST['description'])
 ) {
     // Nettoie les données soumises
-    $title = trim(strip_tags($_POST['title']));
+    $name = trim(strip_tags($_POST['name']));
     $description = trim(strip_tags($_POST['description']));
 
-        if ($title) {
-            $oldTitle = $feature['title'];
+        if ($name) {
+            $oldTitle = $feature['name'];
             $enable = isset($_POST['enable']) ? 1 : 0;
 
 
