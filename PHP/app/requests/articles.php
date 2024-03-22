@@ -98,18 +98,19 @@ function createArticle(string $title, string $description, int $enable, int $use
  * @param ?string $imageName =null
  * @return boolean
  */
-function updateArticle(int $id, string $title, string $description, int $enable, string $updatedAt, ?string $imageName =null): bool
+function updateArticle(int $id, string $title, string $description, int $enable, string $updatedAt, int $userId, ?string $imageName =null): bool
 {
     global $db;
 
     try {
-        $query = "UPDATE articles SET title = :title, description = :description, enable = :enable, updatedAt = :updatedAt";
+        $query = "UPDATE articles SET title = :title, description = :description, enable = :enable, updatedAt = :updatedAt, userId = :userId";
         $params = [
             'id' => $id,
             'title' => $title,
             'description' => $description,
             'enable' => $enable,
             'updatedAt' => $updatedAt,
+            'userId' => $userId,
         ];
 
         if ($imageName) {

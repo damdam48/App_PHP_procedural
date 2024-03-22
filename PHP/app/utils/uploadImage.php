@@ -31,3 +31,20 @@ function uploadImage(array $image, string $folder, ?string $oldImage = null): ?s
     }
     return null;
 }
+
+/**
+ * Delete image dans le folder (coter server)
+ *
+ * @param string $imageName
+ * @param string $folder
+ * @return void
+ */
+function deleteImage(string $imageName, string $folder): void
+{
+    if (file_exists("/app/assets/uploads/$folder/$imageName")) {
+        unlink("/app/assets/uploads/$folder/$imageName");
+
+    } else {
+        $_SESSION['messages']['danger'] = "Une erreur est survenue lors de la suppression de l'image";
+    }
+}
