@@ -19,6 +19,7 @@
                             <div class="dropdown-content">
                                 <a href="/admin/users">Users</a>
                                 <a href="/admin/articles">Articles</a>
+                                <a href="/admin/features">features</a>
                             </div>
                         </div>
                     </li>
